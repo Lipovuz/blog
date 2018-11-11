@@ -1,0 +1,29 @@
+.view {
+    position: center;
+}
+
+.view h1 {
+   text-align: center;
+}
+
+.article-wrapper {
+    border: 1px solid #0b3e6f;
+    padding: 10px;
+    font-style: italic;
+    margin-bottom: 10px;
+    float: right;
+    width: 950px;
+
+}
+.article-header p{
+    font-size: 30px;
+    color: black;
+    text-align: center;
+}
+
+.menu {
+    border: 1px solid #0b3e6f;
+}
+ .menu-pagin{
+     text-align: center;
+ }
