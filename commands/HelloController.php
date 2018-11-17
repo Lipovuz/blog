@@ -8,7 +8,7 @@
 namespace app\commands;
 
 use yii\console\Controller;
-use yii\console\ExitCode;
+
 
 /**
  * This command echoes the first argument that you have entered.
@@ -29,10 +29,19 @@ class HelloController extends Controller
 
     public function actionIndex($message = 'hello world')
     {
-        echo $message . "\n";
+        echo 'sfsdfsdf';
+        echo getenv('MAXIM0');
+        return;
+        $auth = \Yii::$app->authManager;
+        $user = $auth->createRole('user');
+        $user->description = 'User';
+        $auth->add($user);
 
-        return ExitCode::OK;
+        $admin = $auth->createRole('admin');
+        $admin->description = 'Admin';
+        $auth->add($admin);
+
+        $auth->addChild($admin, $user);
     }
-
-
 }
+

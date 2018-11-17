@@ -2,6 +2,7 @@
 
 use app\modules\admin\models\Category;
 use yii\helpers\Html;
+use yii\widgets\ListView;
 
 /**
  * @var \app\models\Article[] $articles
@@ -21,24 +22,9 @@ $this->title = 'Головна';
                 <?php endforeach; ?>
             </ul>
         </div>
-        <?php foreach ($articles as $article ):?>
-            <div class="">
-                <div class="article-wrapper">
-                    <a href="<?=\yii\helpers\Url::to(['/profile/article/view','id'=>$article[id]])?>">
-                        <div class="article-header">
-                        <p><?= $article[name] ?></p>
-                    </div></a>
-                    <div class="article-body">
-                            <?=$article[description]?>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    <div class="menu-pagin">
-        <?php echo \yii\widgets\LinkPager::widget([
-            'pagination' => $pages,
-
+        <?php echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => 'index_golovna.php',
         ]);?>
     </div>
 </div>

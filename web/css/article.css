@@ -1,12 +1,12 @@
-.view {
+    .view {
     position: center;
-}
+    }
 
-.view h1 {
-   text-align: center;
-}
+    .view h1 {
+    text-align: center;
+    }
 
-.article-wrapper {
+    .article-wrapper {
     border: 1px solid #0b3e6f;
     padding: 10px;
     font-style: italic;
@@ -14,16 +14,49 @@
     float: right;
     width: 950px;
 
-}
-.article-header p{
+    }
+    .article-header p{
     font-size: 30px;
     color: black;
     text-align: center;
-}
+    }
 
-.menu {
+    .menu {
     border: 1px solid #0b3e6f;
-}
- .menu-pagin{
-     text-align: center;
- }
+    }
+    .menu-pagin{
+    text-align: center;
+    }
+    ul .pagination{
+    margin: auto;
+    text-align: center;
+
+    }
+    .view-product img{
+    margin-left: 250px;
+    }
+
+    .article-index h1{
+    text-align: center;
+    }
+
+    .article-index p{
+    text-align: right;
+    }
+
+    .category-index h1{
+    text-align: center;
+    }
+    .category-index p{
+    text-align: right;
+    }
+
+    .user-index h1{
+    text-align: center;
+    }
+
+    .user-index p{
+    text-align: right;
+    }
+
+

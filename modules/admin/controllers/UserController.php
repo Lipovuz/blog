@@ -3,6 +3,8 @@
 namespace app\modules\admin\controllers;
 
 use app\components\AccessRule;
+use app\models\SignupForm;
+use app\modules\admin\Module;
 use Yii;
 use app\models\User;
 use yii\data\ActiveDataProvider;
@@ -25,28 +27,8 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
-                'rules' => [
-                    [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_ADMIN],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_USER],
-                    ],
-                ],
-            ],
         ];
     }
-
 
     public function actionIndex()
     {
@@ -93,8 +75,8 @@ class UserController extends Controller
 
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->identity->role=='user'){
-            $this->layout = 'main';
+        if (Yii::$app->user->can('user')){
+            $this->layout = '@app/views/layouts/main';
         }
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -106,7 +88,7 @@ class UserController extends Controller
 
                 $model->save();
             }
-            if (Yii::$app->user->identity->role=='admin') {
+            if (Yii::$app->user->can('admin')) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{
                 return $this->redirect(['/profile/article/profile']);

@@ -5,17 +5,17 @@ namespace app\controllers;
 use app\models\User;
 use Yii;
 use yii\base\InvalidParamException;
-use yii\data\Pagination;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\Article;
+use app\modules\admin\rbac\Rbac as AdminRbac;
 
 class SiteController extends Controller
 {
@@ -24,10 +24,12 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
+        if (Yii::$app->user->can(AdminRbac::PERMISSION_ADMIN_PANEL))
+        $this->layout = '@app/modules/admin/views/layouts/main.php';
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout',],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -50,6 +52,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())){
             if ($user = $model->signup()){
                 if (Yii::$app->getUser()->login($user)){
+                    Yii::$app->session->setFlash('success', "Запит для реєстрації користувача надіслано!");
                     return $this->goHome();
                 }
             }
@@ -77,21 +80,19 @@ class SiteController extends Controller
         $articles = Article::find()
             ->where(['status'=>User::STATUS_ACTIVE]);
         if (null !== $id) {
-            $articles->andWhere(['category_id' => $id])->asArray();
+            $articles->andWhere(['category_id' => $id]);
         }
 
-        $articles = $articles
-            ->asArray();
-
-        $pages = new Pagination(['totalCount' => $articles->count(),'pageSize' => 50]);
-        $articles = $articles->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $articles,
+            'pagination' => [
+                'pageSize' => 25,
+            ]
+        ]);
 
         return $this->render('index',
             [
-                'articles' => $articles,
-                'pages' => $pages,
+                'dataProvider' => $dataProvider,
             ]
         );
     }

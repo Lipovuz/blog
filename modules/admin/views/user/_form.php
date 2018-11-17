@@ -23,11 +23,11 @@ use app\models\User;
 
     <?= $form->field($model, 'img')->fileInput() ?>
 
-    <?php
-    if (Yii::$app->user->identity->role=='admin'){
-        echo $form->field($model, 'role')->dropDownList(User::getUser());
+    <?php if (Yii::$app->user->can('admin')){
+        echo $form->field($model, 'role')->dropDownList(\yii\helpers\ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'));
         echo $form->field($model, 'status')->dropDownList(User::getStatuses());
     }?>
+
     <div class="form-group">
         <?= Html::submitButton('Зберегти', ['class' => 'btn btn-success']) ?>
     </div>

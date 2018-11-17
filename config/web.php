@@ -15,7 +15,7 @@ $config = [
     'modules'=>[
         'admin'=>[
             'class'=>'app\modules\admin\Module',
-            'layout' => 'admin',
+            'layout' => 'main',
         ],
         'profile' => [
             'class' => 'app\modules\profile\Module',
@@ -31,6 +31,9 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+        ],
+        'authManager' => [
+            'class' => 'app\components\AuthManager',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -55,6 +58,7 @@ $config = [
                 ],
             ],
         ],
+
         'db' => $db,
 
         'urlManager' => [

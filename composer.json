@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "mihaildev/yii2-ckeditor": "*",
         "mihaildev/yii2-elfinder": "*",
-        "fzaninotto/faker" : "*"
+        "fzaninotto/faker" : "*",
+        "vlucas/phpdotenv": "^2.5",
+        "dmstr/yii2-adminlte-asset": "2.*"
 
     },
     "require-dev": {

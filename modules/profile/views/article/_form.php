@@ -17,17 +17,17 @@ mihaildev\elfinder\Assets::noConflict($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?php echo $form->field($model, 'text')->widget(CKEditor::className(), [
+    <?= $form->field($model, 'text')->widget(CKEditor::className(), [
   'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),]);?>
 
-    <?php if (Yii::$app->user->identity->role=='admin') {
-            echo $form->field($model, 'status')->dropDownList(\app\models\User::getStatuses());
+    <?php if (Yii::$app->user->can('admin')) {
+        echo $form->field($model, 'status')->dropDownList(\app\models\User::getStatuses());
     }?>
 
     <div class="form-group">

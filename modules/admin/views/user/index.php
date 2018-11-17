@@ -32,11 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'tel',
             'img',
             [
+                'filter' => \yii\helpers\ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'),
                 'attribute' => 'role',
-                'value' => function($data){
-                    return User::getUser()[$data->role];
-                },
-                'format' => 'html',
             ],
             [
                 'attribute' => 'status',

@@ -25,33 +25,11 @@ class ArticleController extends Controller
      */
     public function behaviors()
     {
-        if (Yii::$app->user->identity->role=='admin'){
-            $this->layout = 'admin';
-        }
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                'only' => [ 'view', 'create', 'update', 'delete', 'profile', 'index'],
-                'rules' => [
-                    [
-                        'actions' => ['view', 'create', 'update', 'delete', 'profile', 'index'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_ADMIN],
-                    ],
-                    [
-                        'actions' => ['view', 'create', 'update', 'delete', 'profile'],
-                        'allow' => true,
-                        'roles' => [User::ROLE_USER],
-                    ],
                 ],
             ],
         ];
@@ -88,15 +66,14 @@ class ArticleController extends Controller
     }
     public function actionProfile(){
 
-        if (Yii::$app->user->identity->role=='admin'){
+        /*if (Yii::$app->user->identity->role=='admin'){
             $this->layout = 'admin';
-        }
+        }*/
 
-        $id=Yii::$app->user->id;
         $user_id=Yii::$app->user->id;
         $dataProvider = new ActiveDataProvider([
             'query' => Article::find()->where(['user_id'=>$user_id]),]);
-        $model =  User::find()->where(['id'=>$id])->one();
+        $model =  User::find()->where(['id'=>$user_id])->one();
         return $this->render('profile', compact('model','dataProvider'));
     }
 

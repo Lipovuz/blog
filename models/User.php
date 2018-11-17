@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use Yii;
+
 /**
  * This is the model class for table "users".
  *
@@ -30,12 +31,8 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_WORKED = 5;
     const STATUS_ACTIVE = 10;
-    const ROLE_ADMIN = 'admin';
-    const ROLE_USER = 'user';
+    public $defaultRole = 'user';
 
-    public function can($role){
-        return $this->role == $role;
-    }
 
     public static function tableName()
     {
@@ -60,12 +57,13 @@ class User extends ActiveRecord implements IdentityInterface
             [['tel', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password', 'password_reset_token', 'auth_key', 'name', 'email', 'img'], 'string', 'max' => 255],
             [['role','tel'], 'string', 'max' => 10],
+            ['role', 'string', 'max' => 64],
             [['img'], 'file', 'extensions' => 'png, jpg'],
             ['status','default','value'=> self::STATUS_WORKED],
-            ['role','default','value'=> self::ROLE_USER],
             ['status','in','range' => [self::STATUS_ACTIVE, self::STATUS_WORKED]],
         ];
     }
+
 
     public static function findIdentity($id)
     {
@@ -181,11 +179,13 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public static function getUser()
+    private function getRoleLabel($roleName)
     {
-        return [
-            self::ROLE_USER => 'Користувач',
-            self::ROLE_ADMIN => 'Адмін'
-        ];
+        if ($role = Yii::$app->authManager->getRole($roleName)) {
+            return $role->description;
+        } else {
+            return $roleName;
+        }
     }
+
 }

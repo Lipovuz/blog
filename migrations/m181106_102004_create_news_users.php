@@ -1,13 +1,12 @@
 <?php
 
-use app\models\User;
 use migrations\BaseMigration;
 
 class m181106_102004_create_news_users extends BaseMigration
 {
     public function safeUp()
     {
-$this->createTable(User::tableName(), [
+$this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string(255)->notNull(),
             'password' => $this->string(255)->notNull(),
@@ -24,7 +23,7 @@ $this->createTable(User::tableName(), [
         ], $this->tableOptions);
 
         $this->batchInsert(
-            User::tableName(),
+            '{{%users}}',
             [
                 'username',
                 'password',
@@ -104,6 +103,6 @@ $this->createTable(User::tableName(), [
 
     public function safeDown()
     {
-        $this->dropTable('users');
+        $this->dropTable('{{%users}}');
     }
 }

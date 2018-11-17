@@ -7,13 +7,12 @@ use app\models\User;
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <?php $this->title='Профіль|'.$model->name?>
 </head>
 <section>
-    <div class="col-sm-5 ">
 
-        <div class="view-product">
-            <?php /*if (($model->img)): */?>
-            <img width="200px" height="200px" src="/../../img/<?php
+        <div class="view-product col-sm-7">
+            <img  width="200px" height="200px" src="/../../img/<?php
                 if (!$model->img == null){
                     echo $model->img;
                 }else{
@@ -22,26 +21,23 @@ use app\models\User;
             ?>" alt="" />
 
         </div>
-    </div>
 
     <div class="product-information">
-        <br>
+
         <h2><?=$model->name?></h2>
 
         <br>
         <p><b>Nickname:</b><?=$model->username?></p>
         <p><b>E-mail:</b><?=$model->email?></p>
         <p><b>Телефон:</b><?=$model->tel?></p>
+        <?= Html::a('Редагувати профіль', ['/admin/user/update','id'=>Yii::$app->user->id], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="article-index">
         <br>
-
-         <p>
-             <?= Html::a('Редагувати профіль', ['/admin/user/update','id'=>Yii::$app->user->id], ['class' => 'btn btn-success']) ?>
-
-             <?= Html::a('Додати статю', ['create'], ['class' => 'btn btn-success']) ?>
-         </p>
         <h1>Мої статті</h1>
+        <p>
+        <?= Html::a('Додати статтю', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
