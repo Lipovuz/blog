@@ -7,7 +7,10 @@ use app\models\User;
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <?php $this->title='Профіль|'.$model->name?>
+    <?php $this->title='Профіль|'.$model->name;
+    $this->registerMetaTag(['name' => 'description', 'content' => 'Профіль']);
+    $this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);?>
+
 </head>
 <section>
 
@@ -44,6 +47,12 @@ use app\models\User;
                 ['class' => 'yii\grid\SerialColumn'],
                 'name',
                 'description',
+                [
+                    'attribute' => 'category_id',
+                    'value' => function($data){
+                        return $data->category->name;
+                    },
+                ],
                 [
                     'attribute' => 'status',
                     'value' => function($data){

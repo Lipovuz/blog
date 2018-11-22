@@ -12,7 +12,6 @@ use app\models\User;
 use app\modules\admin\models\Category;
 use yii\console\Controller;
 
-
 /**
  * This command echoes the first argument that you have entered.
  *
@@ -24,8 +23,8 @@ use yii\console\Controller;
 class CreateArticleController extends Controller
 {
 
-    public function actionIndex(){
-
+    public function actionIndex()
+    {
         for ($i=0; $i < 200; $i++) {
             $faker = \Faker\Factory::create('es_RU');
             $article = new Article();
@@ -37,11 +36,11 @@ class CreateArticleController extends Controller
             $article -> name = $faker->city;
             $article -> description = $faker->city;
             $article -> text = $faker->text;
+            $article -> preview = null;
             $article -> status = 10;
 
             $article->save();
         }
-
     }
 
 

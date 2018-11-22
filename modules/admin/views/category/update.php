@@ -6,6 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Category */
 
 $this->title = 'Редагування категорії: ' . $model->name;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Редагування категорії']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = ['label' => 'Категорії', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редагувати';

@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\admin\rbac;
+namespace app\rbac;
 /**
  * Created by PhpStorm.
  * User: vadim
@@ -10,4 +10,6 @@ namespace app\modules\admin\rbac;
 class Rbac
 {
     const PERMISSION_ADMIN_PANEL = 'permAdminPanel';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
 }

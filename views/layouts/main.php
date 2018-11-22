@@ -9,7 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use app\modules\admin\rbac\Rbac as AdminRbac;
+use app\rbac\Rbac;
 
 AppAsset::register($this);
 ?>
@@ -45,7 +45,7 @@ AppAsset::register($this);
         $menuItems[]=['label'=>'Реєстрація', 'url' => ['/site/signup']];
         $menuItems[]=['label'=>'Вхід', 'url' => ['/site/login']];
     } else {
-        if (Yii::$app->user->can(AdminRbac::PERMISSION_ADMIN_PANEL)){
+        if (Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL)){
         $menuItems[] = ['label' => 'Адмінська частина', 'url' => ['/admin/user/index']];
         };
         $menuItems[] = ['label' => 'Профіль', 'url' => ['/profile']];

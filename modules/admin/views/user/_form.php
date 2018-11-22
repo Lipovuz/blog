@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use app\models\User;
+use app\rbac\Rbac;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -23,8 +25,9 @@ use app\models\User;
 
     <?= $form->field($model, 'img')->fileInput() ?>
 
-    <?php if (Yii::$app->user->can('admin')){
-        echo $form->field($model, 'role')->dropDownList(\yii\helpers\ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'));
+    <?php if (Yii::$app->user->can(Rbac::ROLE_ADMIN)){
+        echo $form->field($model, 'role')->
+        dropDownList(ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'));
         echo $form->field($model, 'status')->dropDownList(User::getStatuses());
     }?>
 

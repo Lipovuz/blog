@@ -13,7 +13,7 @@ use app\modules\admin\models\Category;
  * @property int $user_id
  * @property string $name
  * @property string $text
- * @property string $img
+ * @property string $preview
  * @property int $status
  */
 
@@ -24,11 +24,13 @@ class Article extends ActiveRecord
         return '{{%article}}';
     }
 
-    public function getCategory(){
-        return $this->hasMany(Category::className(),['category_id'=>'id']);
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
-    public function getUser(){
+    public function getUser()
+    {
         return $this->hasOne(User::className(),['user_id'=>'id']);
     }
 
@@ -38,7 +40,7 @@ class Article extends ActiveRecord
             [['status'],'default','value'=>User::STATUS_WORKED],
             [[ 'category_id',  'name', 'text', 'status'], 'required'],
             [['id', 'category_id', 'user_id', 'status'], 'integer'],
-            [['text','description'], 'string'],
+            [['text','description','preview'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['id'], 'unique'],
         ];
@@ -53,6 +55,7 @@ class Article extends ActiveRecord
             'name' => 'Назва',
             'description' => 'Опис',
             'text' => 'Стаття',
+            'preview'=> 'Прев\'ю',
             'status' => 'Статус',
         ];
     }

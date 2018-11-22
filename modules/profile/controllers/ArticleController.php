@@ -2,16 +2,15 @@
 
 namespace app\modules\profile\controllers;
 
-use app\components\AccessRule;
+use app\rbac\Rbac;
 use Yii;
 use app\models\Article;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\User;
-
+use yii\web\UploadedFile;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -33,6 +32,17 @@ class ArticleController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action)
+    {
+        if (\Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL)) {
+            $this->layout = '@app/modules/admin/views/layouts/main.php';
+            return $this->layout;
+        }
+        $this->layout = '@app/views/layouts/main.php';
+
+        return $this->layout;
     }
 
     /**
@@ -64,16 +74,13 @@ class ArticleController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-    public function actionProfile(){
-
-        /*if (Yii::$app->user->identity->role=='admin'){
-            $this->layout = 'admin';
-        }*/
-
+    public function actionProfile()
+    {
         $user_id=Yii::$app->user->id;
         $dataProvider = new ActiveDataProvider([
             'query' => Article::find()->where(['user_id'=>$user_id]),]);
         $model =  User::find()->where(['id'=>$user_id])->one();
+
         return $this->render('profile', compact('model','dataProvider'));
     }
 
@@ -87,6 +94,13 @@ class ArticleController extends Controller
         $model = new Article();
         $model->user_id = Yii::$app->user->id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->preview = UploadedFile::getInstance($model, 'preview');
+            if(!empty($model->preview))
+            {
+                $model->preview->saveAs('img/preview_'.$model->id.'.'.$model->preview->extension);
+                $model->preview = 'preview_'.$model->id.'.'.$model->preview->extension;
+                $model->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -107,6 +121,14 @@ class ArticleController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->preview = UploadedFile::getInstance($model, 'preview');
+            if(!empty($model->preview))
+            {
+                $model->preview->saveAs('img/preview_'.$model->id.'.'.$model->preview->extension);
+                $model->preview = 'preview_'.$model->id.'.'.$model->preview->extension;
+
+                $model->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

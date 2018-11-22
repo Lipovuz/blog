@@ -8,6 +8,8 @@ use app\models\User;
 /* @var $model app\models\Category */
 
 $this->title = $model->name;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Перегляд категорії']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = ['label' => 'Категорії', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,6 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
+            [
+                'attribute' => 'parent_id',
+                'value' => $model->category->name ? $model->category->name : 'Самостоятельная категория',
+            ],
             [
                 'attribute' => 'status',
                 'value' => function($data){

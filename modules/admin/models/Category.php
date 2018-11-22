@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -23,17 +22,26 @@ class Category extends ActiveRecord
         return '{{%category}}';
     }
 
-    public function getArticle(){
-        return $this->hasMany(Category::className(),['id'=>'category_id']);
+
+    public static function getCategories()
+    {
+        return self::find()
+            ->andWhere(['status' => self::STATUS_ACTIVE])
+            ->all();
+    }
+
+    public function getCategory(){
+        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
     }
 
     public function rules()
     {
         return [
             [[ 'name', 'status'], 'required'],
-            [['id', 'status'], 'integer'],
+            [['id', 'status','parent_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['id'], 'unique'],
+            [['parent_id'],'parentValidate']
         ];
     }
 
@@ -41,14 +49,32 @@ class Category extends ActiveRecord
     {
         return [
             'name' => 'Назва',
+            'parent_id' => 'Батьківська категорія',
             'status' => 'Статус',
+
         ];
     }
 
-    public static function getCategories()
+
+    public function parentValidate($attribute)
     {
-        return self::find()
-            ->andWhere(['status' => self::STATUS_ACTIVE])
-            ->all();
+        if ($this->isNewRecord) {
+            return;
+        }
+        $existId = [$this->id];
+        $categories =  Category::find()->select('id, parent_id')->indexBy('id')->asArray()->all();
+        $currentParentId = $this->parent_id;
+        if ($currentParentId == null) {
+            return;
+        }
+        while (null != $currentParentId) {
+
+            if (true === in_array($currentParentId, $existId)) {
+                $this->addError($attribute, 'error message');
+                return;
+            }
+            $existId[] = $currentParentId;
+            $currentParentId = $categories[$currentParentId]['parent_id'];
+        }
     }
 }

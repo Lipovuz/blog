@@ -2,13 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\AccessRule;
-use app\models\SignupForm;
-use app\modules\admin\Module;
+use app\rbac\Rbac;
 use Yii;
 use app\models\User;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -75,7 +72,7 @@ class UserController extends Controller
 
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->can('user')){
+        if (Yii::$app->user->can(Rbac::ROLE_USER)){
             $this->layout = '@app/views/layouts/main';
         }
         $model = $this->findModel($id);
@@ -88,7 +85,7 @@ class UserController extends Controller
 
                 $model->save();
             }
-            if (Yii::$app->user->can('admin')) {
+            if (Yii::$app->user->can(Rbac::ROLE_ADMIN)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }else{
                 return $this->redirect(['/profile/article/profile']);

@@ -38,6 +38,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return '{{%users}}';
     }
+
     public function getArticle()
     {
         return $this->hasMany(Article::className(),['id'=>'user_id']);
@@ -86,7 +87,8 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['username'=>$username, 'status'=>self::STATUS_ACTIVE]);
     }
 
-    public static function findByPasswordResetToken($token){
+    public static function findByPasswordResetToken($token)
+    {
         if (!static::isPasswordResetTokenValid($token)){
             return null;
         }
@@ -95,7 +97,9 @@ class User extends ActiveRecord implements IdentityInterface
             'status'=>self::STATUS_ACTIVE,
         ]);
     }
-    public static function isPasswordResetTokenValid($token){
+
+    public static function isPasswordResetTokenValid($token)
+    {
         if (empty($token)){
             return false;
         }
@@ -145,15 +149,18 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
-    public function generatePasswordResetToken(){
+    public function generatePasswordResetToken()
+    {
         $this->password_reset_token = Yii::$app->security->generateRandomString().'_'.time();
     }
 
-    public function removePasswordResetToken(){
+    public function removePasswordResetToken()
+    {
         $this->password_reset_token = null;
     }
 
-    public function attributeLabels(){
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'username' => 'Username',

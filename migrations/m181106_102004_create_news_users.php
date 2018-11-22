@@ -6,7 +6,7 @@ class m181106_102004_create_news_users extends BaseMigration
 {
     public function safeUp()
     {
-$this->createTable('{{%users}}', [
+        $this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
             'username' => $this->string(255)->notNull(),
             'password' => $this->string(255)->notNull(),

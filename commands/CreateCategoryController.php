@@ -9,6 +9,7 @@ namespace app\commands;
 
 use app\modules\admin\models\Category;
 use yii\console\Controller;
+use Faker\Factory;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -21,19 +22,22 @@ use yii\console\Controller;
 class CreateCategoryController extends Controller
 {
 
-    public function actionIndex(){
+
+    public function actionIndex()
+    {
+        $existCategories = [];
 
         for ($i=0; $i < 50; $i++) {
-            $faker = \Faker\Factory::create('es_RU');
+            $faker = Factory::create('es_RU');
             $category = new Category();
-
+            if (count($existCategories) > 0 && ($i % 2 === 0)) {
+                $category->parent_id = $existCategories[rand(0, count($existCategories)-1)];
+            }
             $category->name = $faker->city;
             $category->status = 10;
             $category->save();
+            $existCategories[] = $category->id;
         }
 
     }
-
-
-
 }

@@ -1,31 +1,34 @@
 <?php
 
-use app\modules\admin\models\Category;
-use yii\helpers\Html;
 use yii\widgets\ListView;
+use app\components\MenuWidget;
 
 /**
  * @var \app\models\Article[] $articles
  */
 
 $this->title = 'Головна';
+$this->registerMetaTag(['name' => 'description', 'content' => 'Блог статей']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 ?>
 <div class="site-index container">
     <div class="row">
-        <div id="" class="col-md-2 menu">
+        <div class="">
             <h2>Категорії</h2>
-            <ul id="menu-dashboard" class="nav nav-pills nav-stacked">
-                <?php foreach (Category::getCategories() as $category) : ?>
-                    <li class="<?= Yii::$app->request->get('category') == $category->id ? 'active' : '' ?>">
-                        <?= Html::a($category->name, ['/site/index', 'category' => $category->id]) ?>
-                    </li>
-                <?php endforeach; ?>
+            <div>
+            <ul id="menu-dashboard" class="col-md-2 menu catalog nav nav-pills nav-stacked">
+                <li><?=MenuWidget::widget(['tpl'=>'menu']) ?></li>
             </ul>
+            </div>
+            <div>
+                <?php echo ListView::widget([
+                    'dataProvider' => $dataProvider,
+                    'itemView' => 'index_primal.php',
+                ]);?>
+            </div>
         </div>
-        <?php echo ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemView' => 'index_golovna.php',
-        ]);?>
+
     </div>
+
 </div>
 

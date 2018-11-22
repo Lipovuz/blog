@@ -26,22 +26,9 @@ class HelloController extends Controller
      * @return int Exit code
      */
 
-
     public function actionIndex($message = 'hello world')
     {
-        echo 'sfsdfsdf';
-        echo getenv('MAXIM0');
-        return;
-        $auth = \Yii::$app->authManager;
-        $user = $auth->createRole('user');
-        $user->description = 'User';
-        $auth->add($user);
 
-        $admin = $auth->createRole('admin');
-        $admin->description = 'Admin';
-        $auth->add($admin);
-
-        $auth->addChild($admin, $user);
     }
 }
 

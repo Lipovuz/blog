@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\User;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -39,8 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'tel',
             'img',
             [
-                //'class' => RoleColumn::className(),
-                'filter' => \yii\helpers\ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'),
+                'filter' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'),
                 'attribute' => 'role',
             ],
             [

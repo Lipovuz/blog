@@ -6,6 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Article */
 
 $this->title = 'Редагувати статтю: ' . $model->name;
+$this->registerMetaTag(['name' => 'description', 'content' => 'Редагування статті']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

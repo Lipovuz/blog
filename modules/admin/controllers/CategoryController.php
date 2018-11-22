@@ -2,12 +2,9 @@
 
 namespace app\modules\admin\controllers;
 
-use app\components\AccessRule;
-use app\models\User;
 use Yii;
 use app\modules\admin\models\Category;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

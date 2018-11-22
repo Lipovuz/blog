@@ -24,6 +24,9 @@ class AppAsset extends AssetBundle
         'css/article.css',
     ];
     public $js = [
+        "js/jquery.cookie.js",
+        "js/jquery.accordion.js",
+        "js/main.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

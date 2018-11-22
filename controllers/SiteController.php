@@ -15,7 +15,7 @@ use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\Article;
-use app\modules\admin\rbac\Rbac as AdminRbac;
+use app\rbac\Rbac;
 
 class SiteController extends Controller
 {
@@ -24,8 +24,6 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
-        if (Yii::$app->user->can(AdminRbac::PERMISSION_ADMIN_PANEL))
-        $this->layout = '@app/modules/admin/views/layouts/main.php';
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -47,7 +45,8 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionSignup(){
+    public function actionSignup()
+    {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())){
             if ($user = $model->signup()){
@@ -57,6 +56,7 @@ class SiteController extends Controller
                 }
             }
         }
+
         return $this->render('signup',compact('model'));
     }
 
@@ -75,8 +75,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        if (Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL))
+            $this->layout = '@app/modules/admin/views/layouts/main.php';
         $id = Yii::$app->request->get('category', null);
-
         $articles = Article::find()
             ->where(['status'=>User::STATUS_ACTIVE]);
         if (null !== $id) {
@@ -115,6 +116,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+
         return $this->goHome();
     }
 
@@ -129,6 +131,7 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('error', 'На жаль, ми не можемо скинути пароль для наданої почти.');
             }
         }
+
         return $this->render('passwordResetRequestForm',compact('model'));
     }
 
@@ -144,7 +147,8 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('success', 'New password was saved.');
             return $this->goHome();
         }
+
         return $this->render('resetPasswordForm',compact('model'));
-      }
+    }
 
 }

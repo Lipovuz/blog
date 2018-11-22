@@ -8,6 +8,8 @@ use app\models\User;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Категорії';
+$this->registerMetaTag(['name' => 'description', 'content' => 'Добавлення категорії']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
@@ -24,6 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id',
             'name',
+            [
+                'attribute' => 'parent_id',
+                'value' => function($data){
+                    return $data->category->name ? $data->category->name : 'Самостоятельная категория';
+                },
+            ],
             [
                 'attribute' => 'status',
                 'value' => function($data){

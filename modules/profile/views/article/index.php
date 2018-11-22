@@ -25,6 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             [
+                'attribute' => 'category_id',
+                'value' => function($data){
+                    return $data->category->name;
+                },
+            ],
+            'preview',
+            [
                 'attribute' => 'status',
                 'value' => function($data){
                     return User::getStatuses()[$data->status];
