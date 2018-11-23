@@ -1,9 +1,6 @@
 <?php
 
 use migrations\BaseMigration;
-use app\models\Article;
-use app\modules\admin\models\Category;
-use app\models\User;
 
 class m181108_175831_create_news_article extends BaseMigration
 {
@@ -16,7 +13,6 @@ class m181108_175831_create_news_article extends BaseMigration
             'name' => $this->string(255)->notNull(),
             'description' => $this->string(255)->notNull(),
             'text' => $this->text()->notNull(),
-            'preview' => $this->string(255)->null(),
             'status' => $this->boolean()->notNull(),
         ], $this->tableOptions);
 
