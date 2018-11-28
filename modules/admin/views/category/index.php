@@ -8,8 +8,6 @@ use app\models\User;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Категорії';
-$this->registerMetaTag(['name' => 'description', 'content' => 'Добавлення категорії']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">

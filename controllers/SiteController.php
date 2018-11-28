@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\modules\admin\models\Category;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
@@ -91,12 +92,21 @@ class SiteController extends Controller
             ]
         ]);
 
+        $this->getMetaTag($id);
+
         return $this->render('index',
             [
                 'dataProvider' => $dataProvider,
             ]
         );
     }
+
+    /**
+     * Displays a single Article model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
 
     public function actionLogin()
     {
@@ -133,6 +143,18 @@ class SiteController extends Controller
         }
 
         return $this->render('passwordResetRequestForm',compact('model'));
+    }
+
+    public  function getMetaTag($id){
+        $model = Category::findOne($id);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'title',
+            'content' => $model->meta_title,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => $model->meta_description,
+        ]);
     }
 
     public function actionResetPasswordForm($token)

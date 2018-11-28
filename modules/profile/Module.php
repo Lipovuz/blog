@@ -19,11 +19,6 @@ class Module extends \yii\base\Module
                         'allow' => true,
                         'roles' => ['user'],
                     ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
                 ],
 
             ],

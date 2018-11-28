@@ -6,11 +6,9 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
 
-$this->title = $model->name;
-$this->registerMetaTag(['name' => 'description', 'content' => 'Перегляд статті']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
+$this->title = $model->meta_title;
 $this->params['breadcrumbs'][] = ['label' => 'Статті', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="article-view view">
     <h1><?=$model->name?></h1>

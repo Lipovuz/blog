@@ -103,6 +103,15 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionImageDelete($id)
+    {
+        $model = $this->findModel($id);
+        unlink('img/'.$model->img);
+        $model->img = null;
+        $model->save();
+        $this->redirect(['update','id'=>$id]);
+    }
+
     protected function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {

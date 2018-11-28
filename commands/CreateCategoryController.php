@@ -35,6 +35,7 @@ class CreateCategoryController extends Controller
             }
             $category->name = $faker->city;
             $category->status = 10;
+            $category->meta_title = $category->name;
             $category->save();
             $existCategories[] = $category->id;
         }

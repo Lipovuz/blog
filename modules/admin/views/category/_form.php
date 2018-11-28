@@ -24,6 +24,15 @@ use app\components\MenuWidget;
         </select>
     </div>
 
+    <b>Додаткові поля</b>
+    <div class="meta">
+        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true]) ?>
+    </div>
+
     <?= $form->field($model, 'status')->dropDownList(\app\models\User::getStatuses()); ?>
 
     <div class="form-group">

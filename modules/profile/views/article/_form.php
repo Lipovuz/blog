@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\rbac\Rbac;
 use app\models\User;
 use app\modules\admin\models\Category;
+use yii\helpers\Url;
 use mihaildev\ckeditor\CKEditor;
 use mihaildev\elfinder\ElFinder;
 mihaildev\elfinder\Assets::noConflict($this);
@@ -28,9 +29,28 @@ mihaildev\elfinder\Assets::noConflict($this);
     <?= $form->field($model, 'text')->widget(CKEditor::className(), [
         'editorOptions' => ElFinder::ckeditorOptions('elfinder',[/* Some CKEditor Options */]),]);?>
 
-    <?= $form->field($model, 'preview')->fileInput() ?>
+    <?php
+    if (!$model->preview == null){ ?>
+        <b>Прев'ю</b><br>
+        <img  width="100px" height="100px" src="/../../img/<?php echo $model->preview ?>" alt="" /><br>
+        <a href="<?= Url::to(['article/image-delete', 'id' => $model->id]) ?>"
+           onclick="return confirm('При видалені прев\'ю, сторінка буде перезапущена')" >Видалити прев'ю</a><br>
+    <?php }
+    else{
+        echo $form->field($model, 'preview')->fileInput();
+    }?>
 
     <?php if (Yii::$app->user->can(Rbac::ROLE_ADMIN)) {
+        ?>
+        <b>Додаткові поля</b>
+        <div class="meta">
+            <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
+
+            <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
+
+            <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true]) ?>
+        </div>
+        <?php
         echo $form->field($model, 'status')->dropDownList(User::getStatuses());
     }?>
 
@@ -38,6 +58,6 @@ mihaildev\elfinder\Assets::noConflict($this);
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end();?>
 
 </div>

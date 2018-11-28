@@ -38,6 +38,7 @@ class CreateArticleController extends Controller
             $article -> text = $faker->text;
             $article -> preview = null;
             $article -> status = 10;
+            $article->meta_title = $article->name;
 
             $article->save();
         }

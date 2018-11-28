@@ -53,6 +53,7 @@ class CategoryController extends Controller
      */
     public function actionView($id)
     {
+        $this->getMetaTag($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -85,6 +86,7 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->getMetaTag($id);
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -108,6 +110,23 @@ class CategoryController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+
+    }
+
+    public function getMetaTag($id){
+        $model = $this->findModel($id);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'title',
+            'content' => $model->meta_title,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => $model->meta_description,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => $model->meta_keywords,
+        ]);
     }
 
     /**

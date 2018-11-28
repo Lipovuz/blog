@@ -15,6 +15,9 @@ use app\modules\admin\models\Category;
  * @property string $text
  * @property string $preview
  * @property int $status
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_keywords
  */
 
 class Article extends ActiveRecord
@@ -40,7 +43,7 @@ class Article extends ActiveRecord
             [['status'],'default','value'=>User::STATUS_WORKED],
             [[ 'category_id',  'name', 'text', 'status'], 'required'],
             [['id', 'category_id', 'user_id', 'status'], 'integer'],
-            [['text','description','preview'], 'string'],
+            [['text','description','preview','meta_title','meta_description','meta_keywords'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['id'], 'unique'],
         ];
@@ -57,6 +60,9 @@ class Article extends ActiveRecord
             'text' => 'Стаття',
             'preview'=> 'Прев\'ю',
             'status' => 'Статус',
+            'meta_title' => 'Титул сторінки (title)',
+            'meta_description' => 'Опис сторінки (description)',
+            'meta_keywords' => 'Ключові слова сторінки (keywords)',
         ];
     }
 }

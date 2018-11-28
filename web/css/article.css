@@ -59,3 +59,8 @@
     .preview{
     margin-left: 230px;
     }
+
+    .meta{
+        border: 1px solid black;
+        padding: 15px;
+    }

@@ -38,6 +38,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return '{{%users}}';
     }
+    
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_ACTIVE => 'Активний',
+            self::STATUS_WORKED => 'Модерація',
+        ];
+    }
 
     public function getArticle()
     {
@@ -176,23 +184,6 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    public static function getStatuses()
-    {
-        return [
-            self::STATUS_ACTIVE => 'Активний',
-            self::STATUS_WORKED => 'Модерація',
-        ];
-    }
-
-    private function getRoleLabel($roleName)
-    {
-        if ($role = Yii::$app->authManager->getRole($roleName)) {
-            return $role->description;
-        } else {
-            return $roleName;
-        }
     }
 
 }

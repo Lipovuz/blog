@@ -8,8 +8,6 @@ use app\components\MenuWidget;
  */
 
 $this->title = 'Головна';
-$this->registerMetaTag(['name' => 'description', 'content' => 'Блог статей']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 ?>
 <div class="site-index container">
     <div class="row">

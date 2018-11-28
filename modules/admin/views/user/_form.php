@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\User;
 use app\rbac\Rbac;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -23,7 +24,16 @@ use app\rbac\Rbac;
 
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'img')->fileInput() ?>
+    <?php
+    if (!$model->img == null){ ?>
+        <b>Прев'ю</b><br>
+        <img  width="100px" height="100px" src="/../../img/<?php echo $model->img ?>" alt="" /><br><?php
+        echo Html::a('Видалити зображення', Url::to(['user/image-delete', 'id' => $model->id]));
+        echo '<br>';
+    }else{
+        echo $form->field($model, 'img')->fileInput();
+
+    }?>
 
     <?php if (Yii::$app->user->can(Rbac::ROLE_ADMIN)){
         echo $form->field($model, 'role')->

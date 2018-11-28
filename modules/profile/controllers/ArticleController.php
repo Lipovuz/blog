@@ -51,7 +51,6 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-
         $dataProvider = new ActiveDataProvider([
             'query' => Article::find()->orderBy('status'),
             'pagination' => [
@@ -70,10 +69,12 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
+        $this->getMetaTag($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
+
     public function actionProfile()
     {
         $user_id=Yii::$app->user->id;
@@ -119,7 +120,7 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $this->getMetaTag($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->preview = UploadedFile::getInstance($model, 'preview');
             if(!empty($model->preview))
@@ -129,12 +130,21 @@ class ArticleController extends Controller
 
                 $model->save();
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionImageDelete($id)
+    {
+        $model = $this->findModel($id);
+        unlink('img/'.$model->preview);
+        $model->preview = null;
+        $model->save() ;
+        return $this->redirect(['update','id'=>$id]);
     }
 
     /**
@@ -149,6 +159,23 @@ class ArticleController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+
+    public  function getMetaTag($id){
+        $model = $this->findModel($id);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'title',
+            'content' => $model->meta_title,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'description',
+            'content' => $model->meta_description,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => $model->meta_keywords,
+        ]);
     }
 
     /**

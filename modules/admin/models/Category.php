@@ -11,6 +11,9 @@ use yii\db\ActiveRecord;
  * @property int $parent_id
  * @property string $name
  * @property int $status
+ * @property string $meta_title
+ * @property string $meta_description
+ * @property string $meta_keywords
  */
 class Category extends ActiveRecord
 {
@@ -39,7 +42,7 @@ class Category extends ActiveRecord
         return [
             [[ 'name', 'status'], 'required'],
             [['id', 'status','parent_id'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name','meta_title','meta_description','meta_keywords'], 'string', 'max' => 255],
             [['id'], 'unique'],
             [['parent_id'],'parentValidate']
         ];
@@ -51,6 +54,9 @@ class Category extends ActiveRecord
             'name' => 'Назва',
             'parent_id' => 'Батьківська категорія',
             'status' => 'Статус',
+            'meta_title' => 'Титул сторінки (title)',
+            'meta_description' => 'Опис сторінки (description)',
+            'meta_keywords' => 'Ключові слова сторінки (keywords)',
 
         ];
     }

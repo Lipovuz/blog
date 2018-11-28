@@ -5,13 +5,11 @@ use yii\widgets\DetailView;
 use app\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\modules\admin\models\Category */
 
-$this->title = $model->name;
-$this->registerMetaTag(['name' => 'description', 'content' => 'Перегляд категорії']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
+$this->title = $model->meta_title;
 $this->params['breadcrumbs'][] = ['label' => 'Категорії', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="category-view">
 
@@ -44,6 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'html',
             ],
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
         ],
     ]) ?>
 

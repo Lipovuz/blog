@@ -1,4 +1,3 @@
-<head><meta charset="windows-1251"></head>
 <?php
 
 use yii\helpers\Html;
@@ -7,8 +6,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Article */
 
 $this->title = 'Створити статтю';
-$this->registerMetaTag(['name' => 'description', 'content' => 'Створення статті']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'yii']);
 $this->params['breadcrumbs'][] = ['label' => 'Статті', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
