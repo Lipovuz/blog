@@ -3,12 +3,13 @@
 namespace app\modules\admin;
 
 use app\rbac\Rbac;
+use yii\base\Module as Modules;
 use yii\filters\AccessControl;
 
 /**
  * admin module definition class
  */
-class Module extends \yii\base\Module
+class Module extends Modules
 {
     public function behaviors()
     {
@@ -24,7 +25,7 @@ class Module extends \yii\base\Module
                     [
                         'actions' => ['update'],
                         'allow' => true,
-                        'roles' => ['user'],
+                        'roles' => [Rbac::ROLE_USER],
                     ],
                 ],
 

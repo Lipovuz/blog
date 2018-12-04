@@ -35,18 +35,4 @@ class m181127_134932_create_meta_tag extends Migration
 
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m181127_134932_create_meta_tag cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

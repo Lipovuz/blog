@@ -92,7 +92,7 @@ class SiteController extends Controller
             ]
         ]);
 
-        $this->getMetaTag($id);
+        $this->setMetaTag($id);
 
         return $this->render('index',
             [
@@ -145,15 +145,15 @@ class SiteController extends Controller
         return $this->render('passwordResetRequestForm',compact('model'));
     }
 
-    public  function getMetaTag($id){
+    public  function setMetaTag($id){
         $model = Category::findOne($id);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'title',
-            'content' => $model->meta_title,
-        ]);
         \Yii::$app->view->registerMetaTag([
             'name' => 'description',
             'content' => $model->meta_description,
+        ]);
+        \Yii::$app->view->registerMetaTag([
+            'name' => 'keywords',
+            'content' => $model->meta_keywords,
         ]);
     }
 

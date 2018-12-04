@@ -22,7 +22,8 @@ mihaildev\elfinder\Assets::noConflict($this);
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()
+        ->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
@@ -32,7 +33,7 @@ mihaildev\elfinder\Assets::noConflict($this);
     <?php
     if (!$model->preview == null){ ?>
         <b>Прев'ю</b><br>
-        <img  width="100px" height="100px" src="/../../img/<?php echo $model->preview ?>" alt="" /><br>
+        <?=Html::img("@web/img/{$model->preview}",['width'=>200,'height'=>200]) ?>
         <a href="<?= Url::to(['article/image-delete', 'id' => $model->id]) ?>"
            onclick="return confirm('При видалені прев\'ю, сторінка буде перезапущена')" >Видалити прев'ю</a><br>
     <?php }
@@ -44,7 +45,6 @@ mihaildev\elfinder\Assets::noConflict($this);
         ?>
         <b>Додаткові поля</b>
         <div class="meta">
-            <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'meta_description')->textInput(['maxlength' => true]) ?>
 

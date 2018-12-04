@@ -1,5 +1,7 @@
 <?php
+
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -7,7 +9,10 @@ use yii\helpers\Html;
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">Blog</span><span class="logo-lg">' . 'Blog' . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a(
+            '<span class="logo-mini">Blog</span><span class="logo-lg">' . 'Blog' . '</span>',
+            Yii::$app->homeUrl,
+            ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -21,27 +26,31 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/../../img/<?php
-                                            if (!Yii::$app->user->identity->img == null){
-                                                echo Yii::$app->user->identity->img;
-                                            }else{
-                                                echo 'no-image.png';
-                                            }
-                                            ?>" class="user-image" alt="User Image"/>
+                        <?php if (!Yii::$app->user->identity->img == null) {
+                            echo Html::img(
+                                    "@web/img/" . Yii::$app->user->identity->img,
+                                    ['class' => 'user-image', 'alt' => 'User Image']);
+                        }else{
+                            echo Html::img(
+                                    "@web/img/no-image.png",
+                                    ['class' => 'user-image', 'alt' => 'User Image']);
+                        }
+                        ?>
                         <span class="hidden-xs"><?=Yii::$app->user->identity->name?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="/../../img/<?php
-                            if (!Yii::$app->user->identity->img == null){
-                                echo Yii::$app->user->identity->img;
+                            <?php if (!Yii::$app->user->identity->img == null) {
+                                echo Html::img(
+                                        "@web/img/" . Yii::$app->user->identity->img,
+                                        ['class' => 'img-circle', 'alt' => 'User Image']);
                             }else{
-                                echo 'no-image.png';
+                                echo Html::img(
+                                        "@web/img/no-image.png",
+                                        ['class' => 'img-circle', 'alt' => 'User Image']);
                             }
-                            ?>" class="img-circle"
-                                 alt="User Image"/>
-
+                            ?>
                             <p>
                                 <?=Yii::$app->user->identity->name?> - <?=Yii::$app->user->identity->role?>
                                 <small>E-mail:<?=Yii::$app->user->identity->email?></small>
@@ -50,20 +59,20 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="/profile" class="btn btn-default btn-flat">Профіль</a>
+                                <?=Html::a(
+                                        'Профіль',
+                                        Url::to(['/profile']),
+                                    ['class' => 'btn btn-default btn-flat'])?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
                                     'Вихід',
-                                    ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
-                                ) ?>
+                                    Url::to(['/site/logout']),
+                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']) ?>
                             </div>
                         </li>
                     </ul>
                 </li>
-
-
             </ul>
         </div>
     </nav>

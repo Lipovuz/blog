@@ -3,12 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\User;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Category */
 
-$this->title = $model->meta_title;
-$this->params['breadcrumbs'][] = ['label' => 'Категорії', 'url' => ['index']];
+$this->title = 'Категорія: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Категорії', 'url' => Url::to(['index'])];
 $this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="category-view">
@@ -16,8 +17,8 @@ $this->params['breadcrumbs'][] = $model->name;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Редагувати', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Видалити', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редагувати',Url::to(['update', 'id' => $model->id]), ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Видалити',Url::to(['delete', 'id' => $model->id]), [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -42,7 +43,6 @@ $this->params['breadcrumbs'][] = $model->name;
                 },
                 'format' => 'html',
             ],
-            'meta_title',
             'meta_description',
             'meta_keywords',
         ],

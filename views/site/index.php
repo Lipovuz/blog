@@ -1,7 +1,7 @@
 <?php
 
 use yii\widgets\ListView;
-use app\components\MenuWidget;
+use app\widgets\MenuWidget;
 
 /**
  * @var \app\models\Article[] $articles

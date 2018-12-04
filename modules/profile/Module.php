@@ -3,11 +3,13 @@
 namespace app\modules\profile;
 
 use yii\filters\AccessControl;
+use yii\base\Module as Modules;
+use app\rbac\Rbac;
 
 /**
  * profile module definition class
  */
-class Module extends \yii\base\Module
+class Module extends Modules
 {
     public function behaviors()
     {
@@ -16,8 +18,14 @@ class Module extends \yii\base\Module
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['user'],
+                        'roles' => [Rbac::ROLE_ADMIN],
+                    ],
+                    [
+                        'actions' => ['create','profile','update','view'],
+                        'allow' => true,
+                        'roles' => [Rbac::ROLE_USER],
                     ],
                 ],
 

@@ -10,13 +10,14 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\rbac\Rbac;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
+<head>?>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,17 +39,17 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [
-        ['label' => 'Головна', 'url' => ['/site/index']],
+        ['label' => 'Головна', 'url' => Url::to(['/'])],
     ];
 
     if (Yii::$app->user->isGuest){
-        $menuItems[]=['label'=>'Реєстрація', 'url' => ['/site/signup']];
-        $menuItems[]=['label'=>'Вхід', 'url' => ['/site/login']];
+        $menuItems[]=['label'=>'Реєстрація', 'url' => Url::to(['/site/signup'])];
+        $menuItems[]=['label'=>'Вхід', 'url' => Url::to(['/site/login'])];
     } else {
         if (Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL)){
-        $menuItems[] = ['label' => 'Адмінська частина', 'url' => ['/admin/user/index']];
+        $menuItems[] = ['label' => 'Адмінська частина', 'url' => Url::to(['/admin/user/index'])];
         };
-        $menuItems[] = ['label' => 'Профіль', 'url' => ['/profile']];
+        $menuItems[] = ['label' => 'Профіль', 'url' => Url::to(['/profile'])];
         $menuItems[] = '<li>'
             .Html::beginForm(['/site/logout'],'post')
             .Html::submitButton(

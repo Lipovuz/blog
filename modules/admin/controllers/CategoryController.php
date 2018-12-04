@@ -116,10 +116,6 @@ class CategoryController extends Controller
     public function getMetaTag($id){
         $model = $this->findModel($id);
         \Yii::$app->view->registerMetaTag([
-            'name' => 'title',
-            'content' => $model->meta_title,
-        ]);
-        \Yii::$app->view->registerMetaTag([
             'name' => 'description',
             'content' => $model->meta_description,
         ]);

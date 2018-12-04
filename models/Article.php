@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 use app\modules\admin\models\Category;
+use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "article".
@@ -12,12 +13,13 @@ use app\modules\admin\models\Category;
  * @property int $category_id
  * @property int $user_id
  * @property string $name
+ * @property string $description
  * @property string $text
  * @property string $preview
  * @property int $status
- * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property string $slug
  */
 
 class Article extends ActiveRecord
@@ -37,13 +39,24 @@ class Article extends ActiveRecord
         return $this->hasOne(User::className(),['user_id'=>'id']);
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class'=> SluggableBehavior::className(),
+                'attribute'=>'name',
+                'ensureUnique'=> true,
+            ]
+        ];
+    }
+
     public function rules()
     {
         return [
             [['status'],'default','value'=>User::STATUS_WORKED],
             [[ 'category_id',  'name', 'text', 'status'], 'required'],
             [['id', 'category_id', 'user_id', 'status'], 'integer'],
-            [['text','description','preview','meta_title','meta_description','meta_keywords'], 'string'],
+            [['text','description','preview','meta_description','meta_keywords'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['id'], 'unique'],
         ];
@@ -60,7 +73,6 @@ class Article extends ActiveRecord
             'text' => 'Стаття',
             'preview'=> 'Прев\'ю',
             'status' => 'Статус',
-            'meta_title' => 'Титул сторінки (title)',
             'meta_description' => 'Опис сторінки (description)',
             'meta_keywords' => 'Ключові слова сторінки (keywords)',
         ];

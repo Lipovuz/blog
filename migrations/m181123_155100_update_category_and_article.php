@@ -31,18 +31,4 @@ class m181123_155100_update_category_and_article extends Migration
         $this->dropColumn('{{%article}}', 'preview');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m181123_155100_update_category_and_article cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

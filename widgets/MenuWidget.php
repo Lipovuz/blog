@@ -5,7 +5,8 @@
  * Date: 21.10.18
  * Time: 23:31
  */
-namespace app\components;
+namespace app\widgets;
+
 use yii\base\Widget;
 use app\modules\admin\models\Category;
 use Yii;
@@ -34,7 +35,7 @@ class MenuWidget extends Widget
             $menu = Yii::$app->cache->get('menu');
             if($menu) return $menu;
         }
-            $this->data = Category::find()->indexBy('id')->asArray()->all();
+            $this->data = Category::find()->asArray()->all();
             $this->tree = $this->getTree();
             $this->menuHtml = $this->getMenuHtml($this->tree);
         if($this->tpl == 'menu.php') {

@@ -69,9 +69,10 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
-        $this->getMetaTag($id);
+        $model = $this->findModel($id);
+        $this->setMetaTag($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -120,7 +121,7 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $this->getMetaTag($id);
+        $this->setMetaTag($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->preview = UploadedFile::getInstance($model, 'preview');
             if(!empty($model->preview))
@@ -162,12 +163,8 @@ class ArticleController extends Controller
     }
 
 
-    public  function getMetaTag($id){
+    public  function setMetaTag($id){
         $model = $this->findModel($id);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'title',
-            'content' => $model->meta_title,
-        ]);
         \Yii::$app->view->registerMetaTag([
             'name' => 'description',
             'content' => $model->meta_description,

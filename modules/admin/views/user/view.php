@@ -4,22 +4,26 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\User;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Користувачі', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Користувач : ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Користувачі', 'url' => Url::to(['index'])];
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Редагувати', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Видалити', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+        <?= Html::a('Редагувати',
+            Url::to(['update', 'id' => $model->id]),
+            ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Видалити',
+            Url::to(['delete', 'id' => $model->id]),
+            ['class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
@@ -32,9 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            //'password',
-            //'password_reset_token',
-            //'auth_key',
             'name',
             'email:email',
             'tel',
@@ -50,8 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'html',
             ],
-            //'created_at',
-            //'updated_at',
         ],
     ]) ?>
 

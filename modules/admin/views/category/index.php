@@ -7,7 +7,7 @@ use app\models\User;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Категорії';
+$this->title = 'Усі категорії';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">

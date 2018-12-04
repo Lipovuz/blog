@@ -1,13 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = 'Create User';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = 'Створити користувача';
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => Url::to(['index'])];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-create">

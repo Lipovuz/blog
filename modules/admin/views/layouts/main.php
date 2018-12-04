@@ -1,9 +1,10 @@
 <?php
 use yii\helpers\Html;
+use app\assets\AppAsset;
+use dmstr\web\AdminLteAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 
 if (Yii::$app->controller->action->id === 'login') { 
 /**
@@ -16,13 +17,13 @@ if (Yii::$app->controller->action->id === 'login') {
     );
 } else {
 
-    if (class_exists('app\assets\AppAsset')) {
-        \app\assets\AppAsset::register($this);
+    if (class_exists('AppAsset')) {
+        AppAsset::register($this);
     } else {
-        app\assets\AppAsset::register($this);
+        AppAsset::register($this);
     }
 
-    dmstr\web\AdminLteAsset::register($this);
+    AdminLteAsset::register($this);
 
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     ?>
