@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\models;
 
-use yii\behaviors\SluggableBehavior;
+use app\models\behaviors\Slug;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,12 +20,10 @@ class Category extends ActiveRecord
 {
     const STATUS_ACTIVE = 10;
 
-
     public static function tableName()
     {
         return '{{%category}}';
     }
-
 
     public static function getCategories()
     {
@@ -42,9 +40,10 @@ class Category extends ActiveRecord
     {
         return [
             [
-                'class'=> SluggableBehavior::className(),
-                'attribute'=>'name',
-                'ensureUnique'=> true,
+                'class' => Slug::className(),
+                'in_attribute' => 'name',
+                'out_attribute' => 'slug',
+                'translit' => true
             ]
         ];
     }
@@ -67,11 +66,9 @@ class Category extends ActiveRecord
             'parent_id' => 'Батьківська категорія',
             'status' => 'Статус',
             'meta_description' => 'Опис сторінки (description)',
-            'meta_keywords' => 'Ключові слова сторінки (keywords)',
-
+            'meta_keywords' => 'Ключові слова сторінки (keywords)'
         ];
     }
-
 
     public function parentValidate($attribute)
     {
@@ -85,7 +82,6 @@ class Category extends ActiveRecord
             return;
         }
         while (null != $currentParentId) {
-
             if (true === in_array($currentParentId, $existId)) {
                 $this->addError($attribute, 'error message');
                 return;

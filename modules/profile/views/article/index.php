@@ -39,7 +39,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'html',
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['style' => 'color:#337ab7'],
+                'template' => '{view}{update}{delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                            Url::to(['/profile/article/view',
+                                'id'=>$model->id,
+                                'article_slug'=>$model->slug,
+                                'category_slug'=>$model->category->slug]),
+                            [
+                                'title' => Yii::t('app', 'Переглянути'),
+                            ]);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

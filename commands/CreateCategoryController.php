@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -19,14 +20,13 @@ use Faker\Factory;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
+
 class CreateCategoryController extends Controller
 {
-
 
     public function actionIndex()
     {
         $existCategories = [];
-
         for ($i=0; $i < 50; $i++) {
             $faker = Factory::create('es_RU');
             $category = new Category();
@@ -35,10 +35,8 @@ class CreateCategoryController extends Controller
             }
             $category->name = $faker->city;
             $category->status = 10;
-            $category->meta_title = $category->name;
             $category->save();
             $existCategories[] = $category->id;
         }
-
     }
 }

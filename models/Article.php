@@ -2,9 +2,9 @@
 
 namespace app\models;
 
+use app\models\behaviors\Slug;
 use yii\db\ActiveRecord;
 use app\modules\admin\models\Category;
-use yii\behaviors\SluggableBehavior;
 
 /**
  * This is the model class for table "article".
@@ -43,9 +43,10 @@ class Article extends ActiveRecord
     {
         return [
             [
-                'class'=> SluggableBehavior::className(),
-                'attribute'=>'name',
-                'ensureUnique'=> true,
+                'class' => Slug::className(),
+                'in_attribute' => 'name',
+                'out_attribute' => 'slug',
+                'translit' => true
             ]
         ];
     }

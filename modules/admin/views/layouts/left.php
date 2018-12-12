@@ -28,7 +28,7 @@ use yii\helpers\Url;
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu admin', 'options' => ['class' => 'header']],
-                    ['label' => 'Головна', 'icon' => ' fa-database', 'url' => Url::to(['/site/index'])],
+                    ['label' => 'Головна', 'icon' => ' fa-database', 'url' => Url::to(['/'])],
                     ['label' => 'Профіль', 'icon' => ' fa-user', 'url' => Url::to(['/profile'])],
                     ['label' => 'Категорії', 'icon' => ' fa-list-alt', 'url' => Url::to(['/admin/category/index'])],
                     ['label' => 'Статті', 'icon' => ' fa-file-text', 'url' => Url::to(['/profile/article/index'])],

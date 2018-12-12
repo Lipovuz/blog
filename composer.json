@@ -22,7 +22,8 @@
         "mihaildev/yii2-elfinder": "*",
         "fzaninotto/faker" : "*",
         "vlucas/phpdotenv": "^2.5",
-        "dmstr/yii2-adminlte-asset": "2.*"
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "2amigos/yii2-transliterator-helper": "*"
 
     },
     "require-dev": {

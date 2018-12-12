@@ -1,13 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
 
 $this->title = 'Стаття: '.$model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Статті', 'url' => Url::to(['index'])];
+$this->params['breadcrumbs'][] = ['label' => 'Статті'];
 $this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="article-view view">

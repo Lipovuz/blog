@@ -103,7 +103,6 @@ class SiteController extends Controller
 
     /**
      * Displays a single Article model.
-     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -118,6 +117,7 @@ class SiteController extends Controller
             return $this->goBack();
         }
         $model->password = '';
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -164,7 +164,6 @@ class SiteController extends Controller
         } catch (InvalidParamException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
-
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password was saved.');
             return $this->goHome();

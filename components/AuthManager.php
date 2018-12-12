@@ -10,7 +10,6 @@ use Yii;
 class AuthManager extends PhpManager
 {
 
-
     public function getAssignments($userId)
     {
         if ($userId && $user = $this->getUser($userId)) {
