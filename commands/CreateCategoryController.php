@@ -24,6 +24,9 @@ use Faker\Factory;
 class CreateCategoryController extends Controller
 {
 
+    /**
+     * Create category.
+     */
     public function actionIndex()
     {
         $existCategories = [];

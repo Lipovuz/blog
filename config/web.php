@@ -65,8 +65,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<category_slug>/<category:\d+>'=> 'site/index',
-                '<category_slug>/<article_slug>/<id:\d+>' => 'profile/article/view',
+
                 'signup' => 'site/signup',
                 'login' => 'site/login',
                 'article'=>'profile/article/index',
@@ -76,7 +75,19 @@ $config = [
                 'profile/update' => 'admin/user/update',
                 'article/update' => 'profile/article/update',
                 'users'=>'/admin/user/index',
-            ],
+                [
+                    'pattern' => '<slug>',
+                    'route' => 'site/index',
+                ],
+                [
+                    'pattern' => '<slug>/view',
+                    'route' => 'admin/category/view',
+                ],
+                [
+                    'pattern' => '<category_slug>/<article_slug>',
+                    'route' => 'profile/article/view',
+                ],
+            ]
         ],
     ],
     'controllerMap' => [

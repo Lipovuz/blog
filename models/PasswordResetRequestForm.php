@@ -12,6 +12,7 @@ class PasswordResetRequestForm extends Model
 {
     public $email;
 
+
     public function rules()
     {
         return [
@@ -61,5 +62,4 @@ class PasswordResetRequestForm extends Model
             ->setSubject('Password reset for ' . Yii::$app->name)
             ->send();
     }
-
 }

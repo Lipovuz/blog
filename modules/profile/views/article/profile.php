@@ -62,11 +62,10 @@ $this->title='Профіль|'.$model->name;?>
                     'view' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
                             Url::to(['/profile/article/view',
-                                'id'=>$model->id,
                                 'article_slug'=>$model->slug,
                                 'category_slug'=>$model->category->slug]),
                             [
-                            'title' => Yii::t('app', 'Переглянути'),
+                            'title' => 'Переглянути',
                             ]);
                     },
                 ],

@@ -24,6 +24,8 @@ use app\modules\admin\models\Category;
 
 class Article extends ActiveRecord
 {
+
+
     public static function tableName()
     {
         return '{{%article}}';

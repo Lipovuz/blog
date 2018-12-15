@@ -185,5 +185,4 @@ class User extends ActiveRecord implements IdentityInterface
             'updated_at' => 'Updated At',
         ];
     }
-
 }

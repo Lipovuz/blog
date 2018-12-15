@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'article_slug'=>$model->slug,
                                 'category_slug'=>$model->category->slug]),
                             [
-                                'title' => Yii::t('app', 'Переглянути'),
+                                'title' => 'Переглянути',
                             ]);
                     },
                 ],

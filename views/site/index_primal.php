@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 <hr>
 <div class="article-wrapper">
-    <a href="<?=Url::to(['/profile/article/view','id'=>$model->id,'article_slug'=>$model->slug,'category_slug'=>$model->category->slug])?>">
+    <a href="<?=Url::to(['/profile/article/view', 'article_slug'=>$model->slug,'category_slug'=>$model->category->slug])?>">
         <div class="article-header">
             <p><?= $model->name ?></p>
 

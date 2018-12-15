@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'parent_id',
                 'value' => function($data){
-                    return $data->category->name ? $data->category->name : 'Самостоятельная категория';
+                    return $data->parentCategory ? $data->parentCategory->name : 'Самостоятельная категория';
                 },
             ],
             [
@@ -38,7 +38,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['style' => 'color:#337ab7'],
+                'template' => '{view}{update}{delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
+                            \yii\helpers\Url::to(['/admin/category/view',
+                                'slug'=>$model->slug]),
+                            [
+                                'title' => 'Переглянути',
+                            ]);
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

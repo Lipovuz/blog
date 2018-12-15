@@ -2,11 +2,11 @@
 
 namespace app\modules\profile\controllers;
 
+use app\controllers\BaseController;
 use app\rbac\Rbac;
 use Yii;
 use app\models\Article;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\User;
@@ -15,9 +15,10 @@ use yii\web\UploadedFile;
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     public $layout;
+
 
     /**
      * {@inheritdoc}
@@ -63,14 +64,14 @@ class ArticleController extends Controller
 
     /**
      * Displays a single Article model.
-     * @param integer $id
+     * @param $article_slug
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($article_slug)
     {
-        $model = $this->findModel($id);
-        $this->setMetaTag($id);
+        $model = $this->findModelBySlug($article_slug);
+        $this->setMetaTag($model->meta_description,$model->meta_keywords);
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -121,7 +122,7 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $this->setMetaTag($id);
+        $this->setMetaTag($model->meta_description,$model->meta_keywords);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->preview = UploadedFile::getInstance($model, 'preview');
             if(!empty($model->preview))
@@ -151,28 +152,19 @@ class ArticleController extends Controller
     /**
      * Deletes an existing Article model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-
-    public  function setMetaTag($id){
-        $model = $this->findModel($id);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'description',
-            'content' => $model->meta_description,
-        ]);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'keywords',
-            'content' => $model->meta_keywords,
-        ]);
     }
 
     /**
@@ -185,6 +177,15 @@ class ArticleController extends Controller
     protected function findModel($id)
     {
         if (($model = Article::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelBySlug($slug)
+    {
+        if (($model = Article::findOne(['slug' => $slug])) !== null) {
             return $model;
         }
 

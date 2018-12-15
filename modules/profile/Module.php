@@ -23,7 +23,7 @@ class Module extends Modules
                         'roles' => [Rbac::ROLE_ADMIN],
                     ],
                     [
-                        'actions' => ['create','profile','update','view'],
+                        'actions' => ['create','profile','update','view','delete','image-delete'],
                         'allow' => true,
                         'roles' => [Rbac::ROLE_USER],
                     ],

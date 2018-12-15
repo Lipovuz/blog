@@ -5,7 +5,6 @@
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 namespace app\commands;
 
 use app\models\Article;
@@ -21,10 +20,13 @@ use yii\console\Controller;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-
 class CreateArticleController extends Controller
 {
 
+
+    /**
+     * Create article.
+     */
     public function actionIndex()
     {
         for ($i=0; $i < 200; $i++) {
@@ -44,6 +46,4 @@ class CreateArticleController extends Controller
             $article->save();
         }
     }
-
-
 }

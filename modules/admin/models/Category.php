@@ -20,6 +20,7 @@ class Category extends ActiveRecord
 {
     const STATUS_ACTIVE = 10;
 
+
     public static function tableName()
     {
         return '{{%category}}';
@@ -32,7 +33,7 @@ class Category extends ActiveRecord
             ->all();
     }
 
-    public function getCategory(){
+    public function getParentCategory(){
         return $this->hasOne(Category::className(), ['id' => 'parent_id']);
     }
 

@@ -16,6 +16,7 @@ class ContactForm extends Model
     public $body;
     public $verifyCode;
 
+
     /**
      * @return array the validation rules.
      */

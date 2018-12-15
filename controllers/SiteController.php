@@ -9,7 +9,6 @@ use yii\base\InvalidParamException;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
@@ -18,8 +17,10 @@ use app\models\ResetPasswordForm;
 use app\models\Article;
 use app\rbac\Rbac;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -46,6 +47,9 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -61,6 +65,9 @@ class SiteController extends Controller
         return $this->render('signup',compact('model'));
     }
 
+    /**
+     * @return array
+     */
     public function actions()
     {
         return [
@@ -74,15 +81,26 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionIndex()
+
+    /**
+     * @param string|null $slug
+     * @return string
+     */
+    public function actionIndex(string $slug = null)
     {
-        if (Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL))
+        if (Yii::$app->user->can(Rbac::PERMISSION_ADMIN_PANEL)) {
             $this->layout = '@app/modules/admin/views/layouts/main.php';
-        $id = Yii::$app->request->get('category', null);
+        }
+
+        $category = Category::findOne(['slug' => $slug]);
+
         $articles = Article::find()
-            ->where(['status'=>User::STATUS_ACTIVE]);
-        if (null !== $id) {
-            $articles->andWhere(['category_id' => $id]);
+            ->where(['status'=>User::STATUS_ACTIVE])
+            ->orderBy(['id' => SORT_DESC]);
+
+        if ($category) {
+            $articles->andWhere(['category_id' => $category->id]);
+            $this->setMetaTag($category->meta_description, $category->meta_keywords);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -92,10 +110,10 @@ class SiteController extends Controller
             ]
         ]);
 
-        $this->setMetaTag($id);
 
         return $this->render('index',
             [
+                'category' => $category,
                 'dataProvider' => $dataProvider,
             ]
         );
@@ -104,7 +122,6 @@ class SiteController extends Controller
     /**
      * Displays a single Article model.
      * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
      */
 
     public function actionLogin()
@@ -123,6 +140,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -130,6 +150,9 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
@@ -145,18 +168,11 @@ class SiteController extends Controller
         return $this->render('passwordResetRequestForm',compact('model'));
     }
 
-    public  function setMetaTag($id){
-        $model = Category::findOne($id);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'description',
-            'content' => $model->meta_description,
-        ]);
-        \Yii::$app->view->registerMetaTag([
-            'name' => 'keywords',
-            'content' => $model->meta_keywords,
-        ]);
-    }
-
+    /**
+     * @param $token
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     */
     public function actionResetPasswordForm($token)
     {
         try {
@@ -171,5 +187,4 @@ class SiteController extends Controller
 
         return $this->render('resetPasswordForm',compact('model'));
     }
-
 }

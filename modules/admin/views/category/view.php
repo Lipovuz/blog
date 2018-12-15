@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $model->name;
             'name',
             [
                 'attribute' => 'parent_id',
-                'value' => $model->category->name ? $model->category->name : 'Самостоятельная категория',
+                'value' => $model->parentCategory ? $model->parentCategory->name : 'Самостоятельная категория',
             ],
             [
                 'attribute' => 'status',

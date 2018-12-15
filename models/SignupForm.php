@@ -25,6 +25,7 @@ class SignupForm extends Model
     public $name;
     public $email;
 
+
     public function rules()
     {
         return [
@@ -62,6 +63,4 @@ class SignupForm extends Model
             'email' => 'E-mail',
         ];
     }
-
-
 }
