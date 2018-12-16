@@ -65,7 +65,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-
+                'site/<action>' => 'site/<action>',
                 'signup' => 'site/signup',
                 'login' => 'site/login',
                 'article'=>'profile/article/index',

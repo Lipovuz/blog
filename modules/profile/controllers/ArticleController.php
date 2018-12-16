@@ -104,7 +104,7 @@ class ArticleController extends BaseController
                 $model->preview = 'preview_'.$model->id.'.'.$model->preview->extension;
                 $model->save();
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['profile', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -123,6 +123,7 @@ class ArticleController extends BaseController
     {
         $model = $this->findModel($id);
         $this->setMetaTag($model->meta_description,$model->meta_keywords);
+        $model->status = User::STATUS_WORKED;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->preview = UploadedFile::getInstance($model, 'preview');
             if(!empty($model->preview))
@@ -132,7 +133,11 @@ class ArticleController extends BaseController
 
                 $model->save();
             }
-            return $this->redirect(['index', 'id' => $model->id]);
+            if (Yii::$app->user->can(Rbac::ROLE_ADMIN)) {
+                return $this->redirect(['index', 'id' => $model->id]);
+            }else{
+                return $this->redirect(['profile', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -162,7 +167,10 @@ class ArticleController extends BaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if ($model->preview !== null & $model->preview !== '')
+        unlink('img/'.$model->preview);
+        $model->delete();
 
         return $this->redirect(['index']);
     }
