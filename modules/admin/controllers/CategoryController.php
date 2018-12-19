@@ -3,6 +3,9 @@
 namespace app\modules\admin\controllers;
 
 use app\controllers\BaseController;
+use app\models\Article;
+use app\models\User;
+use app\rbac\Rbac;
 use Yii;
 use app\modules\admin\models\Category;
 use yii\data\ActiveDataProvider;

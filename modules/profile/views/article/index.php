@@ -46,8 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'view' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',
-                            Url::to(['/profile/article/view',
-                                'id'=>$model->id,
+                            Url::to(['/article/view',
                                 'article_slug'=>$model->slug,
                                 'category_slug'=>$model->category->slug]),
                             [

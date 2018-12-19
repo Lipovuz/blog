@@ -77,15 +77,15 @@ $config = [
                 'users'=>'/admin/user/index',
                 [
                     'pattern' => '<slug>',
-                    'route' => 'site/index',
+                    'route' => 'category/view',
                 ],
                 [
-                    'pattern' => '<slug>/view',
+                    'pattern' => 'admin/<slug>',
                     'route' => 'admin/category/view',
                 ],
                 [
                     'pattern' => '<category_slug>/<article_slug>',
-                    'route' => 'profile/article/view',
+                    'route' => '/article/view',
                 ],
             ]
         ],

@@ -18,11 +18,8 @@ $this->title = 'Головна';
                 <li><?=MenuWidget::widget(['tpl'=>'menu']) ?></li>
             </ul>
             </div>
-            <div>
-                <?php echo ListView::widget([
-                    'dataProvider' => $dataProvider,
-                    'itemView' => 'index_primal.php',
-                ]);?>
+            <div class="text-center">
+                <h1>Hello Blog!!!</h1>
             </div>
         </div>
 

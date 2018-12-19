@@ -62,21 +62,6 @@ class ArticleController extends BaseController
         return $this->render('index', compact('dataProvider'));
     }
 
-    /**
-     * Displays a single Article model.
-     * @param $article_slug
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($article_slug)
-    {
-        $model = $this->findModelBySlug($article_slug);
-        $this->setMetaTag($model->meta_description,$model->meta_keywords);
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionProfile()
     {
         $user_id=Yii::$app->user->id;
@@ -191,12 +176,4 @@ class ArticleController extends BaseController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function findModelBySlug($slug)
-    {
-        if (($model = Article::findOne(['slug' => $slug])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }

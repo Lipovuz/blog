@@ -8,7 +8,9 @@
 
 namespace app\controllers;
 
+use app\models\Article;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class BaseController extends Controller
 {
@@ -35,5 +37,14 @@ class BaseController extends Controller
                 'content' => $keywords,
             ]);
         }
+    }
+
+    protected function findModelBySlug($slug)
+    {
+        if (($model = Article::findOne(['slug' => $slug])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

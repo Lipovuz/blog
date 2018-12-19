@@ -4,10 +4,6 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Article */
-
-$this->title = 'Стаття: '.$model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Статті'];
-$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="article-view view">
     <h1><?=$model->name?></h1>

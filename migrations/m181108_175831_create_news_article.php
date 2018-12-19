@@ -29,6 +29,10 @@ class m181108_175831_create_news_article extends BaseMigration
 
     public function safeDown()
     {
+        $this->dropForeignKey('FK_article_user_id','{{%article}}');
+        $this->dropIndex('FK_article_user_id','{{%article}}');
+        $this->dropForeignKey('FK_article_category_id','{{%article}}');
+        $this->dropIndex('FK_article_category_id','{{%article}}');
         $this->dropTable('{{%article}}');
     }
 }
